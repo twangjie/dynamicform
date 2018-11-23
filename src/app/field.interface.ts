@@ -3,13 +3,28 @@ export interface Validator {
   validator: any;
   message: string;
 }
+
+export interface Option {
+  name: string;
+  value: any;
+}
+
 export interface FieldConfig {
+  index?: number;
+  key?: string;
   label?: string;
-  name?: string;
-  inputType?: string;
-  options?: string[];
-  collections?: any;
-  type: string;
+  catalog?: string;
+  catalogDesc?: string;
+  subCatalog?: string;
+  subCatalogDesc?: string;
   value?: any;
+  defaultValue?: any;
+  options?: Option[];
+  type: string;
+  inputType?: string;
+  name?: string;
+  comment?: string;
   validations?: Validator[];
+  readOnly?: boolean;
+  rebootRequired?: boolean;
 }

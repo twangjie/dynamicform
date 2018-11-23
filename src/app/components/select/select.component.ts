@@ -1,12 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { FieldConfig } from "../../field.interface";
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {FieldConfig} from '../../field.interface';
+
 @Component({
-  selector: "app-select",
+  selector: 'app-select',
   template: `
 <mat-form-field class="demo-full-width margin-top" [formGroup]="group">
 <mat-select [placeholder]="field.label" [formControlName]="field.name">
-<mat-option *ngFor="let item of field.options" [value]="item">{{item}}</mat-option>
+<mat-option *ngFor="let item of field.options" [value]="item.value">{{item.name}}</mat-option>
 </mat-select>
 </mat-form-field>
 `,
@@ -15,6 +16,10 @@ import { FieldConfig } from "../../field.interface";
 export class SelectComponent implements OnInit {
   field: FieldConfig;
   group: FormGroup;
-  constructor() {}
-  ngOnInit() {}
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 }

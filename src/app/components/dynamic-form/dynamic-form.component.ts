@@ -1,27 +1,15 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output
-} from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { FieldConfig, Validator } from "../../field.interface";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FieldConfig} from '../../field.interface';
 
 @Component({
-  exportAs: "dynamicForm",
-  selector: "dynamic-form",
+  exportAs: 'dynamicForm',
+  selector: 'app-dynamic-form',
   template: `
-  <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
-  <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
-  </ng-container>
-  </form>
+    <form class="app-dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
+      <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
+      </ng-container>
+    </form>
   `,
   styles: []
 })
@@ -35,7 +23,9 @@ export class DynamicFormComponent implements OnInit {
   get value() {
     return this.form.value;
   }
-  constructor(private fb: FormBuilder) {}
+
+  constructor(private fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.form = this.createControl();
@@ -54,9 +44,11 @@ export class DynamicFormComponent implements OnInit {
   createControl() {
     const group = this.fb.group({});
     this.fields.forEach(field => {
-      if (field.type === "button") return;
+      if (field.type === 'button') {
+        return;
+      }
       const control = this.fb.control(
-        field.value,
+        {value: field.value, disabled: field.readOnly === true},
         this.bindValidations(field.validations || [])
       );
       group.addControl(field.name, control);
@@ -78,7 +70,7 @@ export class DynamicFormComponent implements OnInit {
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
-      control.markAsTouched({ onlySelf: true });
+      control.markAsTouched({onlySelf: true});
     });
   }
 }
