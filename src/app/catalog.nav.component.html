@@ -1,0 +1,10 @@
+<div id="sidebar" class="sidenav">
+  <mat-nav-list>
+
+    <a mat-list-item *ngFor="let item of catalogs" (click)="onClick(item)">
+      <mat-icon class="sidenav-icon">build</mat-icon>
+      {{item}}
+    </a>
+
+  </mat-nav-list>
+</div>

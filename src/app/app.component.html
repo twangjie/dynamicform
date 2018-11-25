@@ -1,13 +1,24 @@
-<div class="form">
-  <div style="text-align:center">
-    <h2>配置项</h2>
-  </div>
-  <app-dynamic-form [fields]="regConfig" (submit)="submit($event)">
-  </app-dynamic-form>
-  <mat-card class="margin-top">
-    <mat-card-content>
-      {{ form.value | json }}
-    </mat-card-content>
+<app-catalog-nav></app-catalog-nav>
+<div class="main-container">
+  <div>
 
-  </mat-card>
+    <label>url
+      <input matInput id="url" value="http://127.0.0.1:5300" />
+      <button mat-raised-button name="submit" (click)="getConfig()">获取</button>
+    </label>
+
+  </div>
+  <div class="form">
+    <div style="text-align:center">
+      <h2>{{selectedCatalog.name}}</h2>
+    </div>
+    <app-dynamic-form [fields]="dataChange | async" (submit)="submit($event)">
+    </app-dynamic-form>
+    <mat-card class="margin-top">
+      <mat-card-content>
+        {{ getValue() }}
+      </mat-card-content>
+
+    </mat-card>
+  </div>
 </div>

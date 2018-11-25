@@ -24,6 +24,11 @@ export class DynamicFormComponent implements OnInit {
     return this.form.value;
   }
 
+  setConfig(config: FieldConfig[]) {
+    this.fields = config;
+    this.form = this.createControl();
+  }
+
   constructor(private fb: FormBuilder) {
   }
 

@@ -9,14 +9,22 @@ export interface Option {
   value: any;
 }
 
+export interface Catalog {
+  name: string;
+  value: any;
+}
+
+export interface SubCatalog {
+  name: string;
+  value: any;
+}
+
 export interface FieldConfig {
   index?: number;
   key?: string;
   label?: string;
-  catalog?: string;
-  catalogDesc?: string;
-  subCatalog?: string;
-  subCatalogDesc?: string;
+  catalog?: Catalog;
+  subCatalog?: SubCatalog;
   value?: any;
   defaultValue?: any;
   options?: Option[];

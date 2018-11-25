@@ -1,0 +1,12 @@
+<div class="demo-full-width margin-top mat-form-field" [formGroup]="group">
+  <label class="radio-label-padding">{{field.label}}</label>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>已选择：{{getSelected()}}</mat-expansion-panel-header>
+    <mat-selection-list [formControlName]="field.name" #options
+                        (selectionChange)="onSelection($event, options.selectedOptions)">
+      <mat-list-option checkboxPosition="before" *ngFor="let item of field.options" [value]="item.value"
+                       style="height: 28px;">{{item.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+</div>

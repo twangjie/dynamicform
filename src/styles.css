@@ -16,6 +16,10 @@ body {
   padding-right: 10px;
   color: grey;
 }
+.mat-radio-button-padding {
+  padding-right: 5px;
+  /*color: grey;*/
+}
 .form {
   margin-left: 10px;
   border: 2px solid lightgray;

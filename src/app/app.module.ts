@@ -14,6 +14,8 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DynamicFieldDirective} from './components/dynamic-field/dynamic-field.directive';
 import {DynamicFormComponent} from './components/dynamic-form/dynamic-form.component';
 import {SelectionListComponent} from './components/selection-list/selection-list.component';
+import {CatalogNavComponent} from './catalog.nav.component';
+import {ConfigService} from './config.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {SelectionListComponent} from './components/selection-list/selection-list
     RadiobuttonComponent,
     CheckboxComponent,
     DynamicFieldDirective,
-    DynamicFormComponent
+    DynamicFormComponent,
+    CatalogNavComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,9 @@ import {SelectionListComponent} from './components/selection-list/selection-list
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    ConfigService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     InputComponent,
