@@ -1,21 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {FieldConfig} from '../../field.interface';
+import {DynamicControl} from '../DynamicControl';
 
 @Component({
   selector: 'app-checkbox',
   template: `
-    <div class="demo-full-width margin-top" [formGroup]="group">
+    <div class="demo-full-width margin-top" [formGroup]="formGroup">
       <mat-checkbox [formControlName]="field.name">{{field.label}}</mat-checkbox>
     </div>
   `,
   styles: []
 })
-export class CheckboxComponent implements OnInit {
-  field: FieldConfig;
-  group: FormGroup;
+export class CheckboxComponent extends DynamicControl implements OnInit {
 
   constructor() {
+    super();
   }
 
   ngOnInit() {

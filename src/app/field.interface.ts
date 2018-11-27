@@ -30,6 +30,7 @@ export interface FieldConfig {
   options?: Option[];
   type: string;
   inputType?: string;
+  endPoint?: string;
   name?: string;
   comment?: string;
   validations?: Validator[];

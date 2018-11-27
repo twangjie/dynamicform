@@ -1,0 +1,21 @@
+{
+  "/api/*": {
+    "target": "http://127.0.0.1:5300",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": "http://127.0.0.1:5300/api"
+    }
+  },
+
+  "/31/api/*": {
+    "target": "http://192.168.50.31:9700",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/31/api": "http://192.168.50.31:9700/api"
+    }
+  }
+}

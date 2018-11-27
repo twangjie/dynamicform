@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {FieldConfig} from './field.interface';
 import {Validators} from '@angular/forms';
-import {Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ConfigService {
 
-  get configFields() {
-    return this.regConfig;
-  }
+  url = '/api/v1/config';
 
   private catalogClickedSource = new Subject<any>();
   catalogClicked$ = this.catalogClickedSource.asObservable();
@@ -59,6 +58,7 @@ export class ConfigService {
       label: 'Email Address',
       inputType: 'email',
       name: 'email',
+      value: 'test@test.com',
       catalog: {name: '基本', value: 'basic'},
       validations: [
         {
@@ -76,11 +76,18 @@ export class ConfigService {
       ]
     },
     {
+      type: 'button',
+      inputType: 'button',
+      catalog: {name: '基本', value: 'basic'},
+      label: '测试用户名'
+    },
+    {
       key: 'ms.user.password',
       type: 'input',
       label: 'Password',
       inputType: 'password',
       name: 'password',
+      value: '123456',
       catalog: {name: '基本', value: 'basic'},
       validations: [
         {
@@ -104,6 +111,7 @@ export class ConfigService {
       label: '年龄',
       inputType: 'number',
       name: 'age',
+      value: 24,
       catalog: {name: '基本', value: 'basic'},
       validations: [
         {
@@ -128,13 +136,14 @@ export class ConfigService {
       name: 'gender',
       catalog: {name: '基本', value: 'basic'},
       options: [{name: 'Male', value: 'male'}, {name: 'Female', value: 'female'}, {name: 'Third gender', value: '3rdGender'}],
-      value: 'Male'
+      value: 'male'
     },
     {
       key: 'ms.user.birthday',
       type: 'date',
       label: '日期',
       name: 'dob',
+      value: '2018-09-11',
       catalog: {name: '高级', value: 'advanced'},
       validations: [
         {
@@ -159,8 +168,18 @@ export class ConfigService {
       name: 'plugins',
       catalog: {name: '高级', value: 'advanced'},
       label: '可选插件',
-      value: ['Hik', 'DaHua'],
+      value: 'Hik,DaHua',
       options: [{name: '海康', value: 'Hik'}, {name: '大华', value: 'DaHua'}, {name: '宇视', value: 'UniView'}]
+    },
+    {
+      key: 'ms.user.mime',
+      type: 'selectionList',
+      name: 'mime',
+      catalog: {name: '高级', value: 'advanced'},
+      label: 'MIME格式',
+      value: 'text/html,application/xml',
+      options: [{name: 'application/xml', value: 'application/xml'},
+        {name: 'text/html', value: 'text/html'}, {name: 'text/xml', value: 'text/xml'}]
     },
     {
       key: 'ms.user.term',
@@ -169,11 +188,29 @@ export class ConfigService {
       name: 'term',
       catalog: {name: '其他', value: 'others'},
       value: true
-    },
-    {
-      type: 'button',
-      label: '保存'
     }
   ];
   announceCatalogClicked = (item) => this.catalogClickedSource.next(item);
+
+  constructor(private httpClient: HttpClient) {
+    let index = 0;
+    this.regConfig.forEach(item => item.index = index++);
+  }
+
+  getConfigFields(url): Observable<FieldConfig[]> {
+
+    this.url = url;
+    if (url !== undefined && url.length > 0) {
+      return this.httpClient.get<FieldConfig[]>(url);
+    } else {
+      return of(this.regConfig);
+    }
+  }
+
+  updateConfig(endpoint, config, method): Observable<any> {
+    if (method === 'post') {
+      return this.httpClient.post<any[]>(endpoint, config);
+    }
+    return this.httpClient.put<any[]>(endpoint, config);
+  }
 }

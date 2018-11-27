@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {FieldConfig} from '../../field.interface';
+import {DynamicControl} from '../DynamicControl';
 
 @Component({
   selector: 'app-select',
   template: `
-    <mat-form-field class="demo-full-width margin-top" [formGroup]="group">
+    <mat-form-field class="demo-full-width margin-top" [formGroup]="formGroup">
       <mat-select [placeholder]="field.label" [formControlName]="field.name">
         <mat-option *ngFor="let item of field.options" [value]="item.value">{{item.name}}</mat-option>
       </mat-select>
@@ -13,11 +12,10 @@ import {FieldConfig} from '../../field.interface';
   `,
   styles: []
 })
-export class SelectComponent implements OnInit {
-  field: FieldConfig;
-  group: FormGroup;
+export class SelectComponent extends DynamicControl implements OnInit {
 
   constructor() {
+    super();
   }
 
   ngOnInit() {

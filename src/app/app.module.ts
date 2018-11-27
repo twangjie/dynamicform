@@ -14,8 +14,11 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DynamicFieldDirective} from './components/dynamic-field/dynamic-field.directive';
 import {DynamicFormComponent} from './components/dynamic-form/dynamic-form.component';
 import {SelectionListComponent} from './components/selection-list/selection-list.component';
-import {CatalogNavComponent} from './catalog.nav.component';
 import {ConfigService} from './config.service';
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {PrettyJsonModule} from 'angular2-prettyjson';
 
 @NgModule({
   declarations: [
@@ -29,14 +32,17 @@ import {ConfigService} from './config.service';
     CheckboxComponent,
     DynamicFieldDirective,
     DynamicFormComponent,
-    CatalogNavComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule,
+    PrettyJsonModule
   ],
   providers: [
     ConfigService

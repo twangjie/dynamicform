@@ -8,6 +8,7 @@ import {DateComponent} from '../date/date.component';
 import {RadiobuttonComponent} from '../radiobutton/radiobutton.component';
 import {CheckboxComponent} from '../checkbox/checkbox.component';
 import {SelectionListComponent} from '../selection-list/selection-list.component';
+import {DynamicControl} from '../DynamicControl';
 
 const componentMapper = {
   input: InputComponent,
@@ -38,7 +39,9 @@ export class DynamicFieldDirective implements OnInit {
       componentMapper[this.field.type]
     );
     this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.field = this.field;
-    this.componentRef.instance.group = this.group;
+
+    const control: DynamicControl = this.componentRef.instance;
+    control.setFormGroup(this.group);
+    control.setField(this.field);
   }
 }
