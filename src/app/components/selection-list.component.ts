@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FieldConfig} from '../../field.interface';
-import {DynamicControl} from '../DynamicControl';
+import {FieldConfig} from '../field.interface';
+import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-selection-list',
+  selector: 'app-dynamic-selection-list',
   template: `
     <div class="demo-full-width margin-top mat-form-field" [formGroup]="formGroup">
       <label class="radio-label-padding">{{field.label}}</label>

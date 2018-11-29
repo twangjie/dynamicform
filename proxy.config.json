@@ -17,5 +17,15 @@
     "pathRewrite": {
       "^/31/api": "http://192.168.50.31:9700/api"
     }
+  },
+
+  "/116/api/*": {
+    "target": "http://192.168.50.116:10200",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/116/api": "http://192.168.50.116:10200/api"
+    }
   }
 }

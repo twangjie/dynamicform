@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {FieldConfig} from './field.interface';
-import {Validators} from '@angular/forms';
 import {Observable, of, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
@@ -34,21 +33,25 @@ export class ConfigService {
       validations: [
         {
           name: 'required',
-          validator: Validators.required,
-          message: 'Name Required'
+          validator: undefined,
+          message: 'Name Required',
+          value: undefined
         },
         {
           name: 'pattern',
-          validator: Validators.pattern('^[a-zA-Z]+$'),
-          message: 'Accept only text'
+          validator: undefined,
+          message: 'Accept only text',
+          value: '^[a-zA-Z]+$',
         }, {
           name: 'minlength',
-          validator: Validators.minLength(5),
-          message: 'Name min length: 5'
+          validator: undefined,
+          message: 'Name min length: 5',
+          value: 5
         }, {
           name: 'maxlength',
-          validator: Validators.maxLength(20),
-          message: 'Name max length: 20'
+          validator: undefined,
+          message: 'Name max length: 20',
+          value: 20
         }
       ]
     },
@@ -63,15 +66,15 @@ export class ConfigService {
       validations: [
         {
           name: 'required',
-          validator: Validators.required,
-          message: 'Email Required'
+          validator: undefined,
+          message: 'Email Required',
+          value: undefined
         },
         {
           name: 'pattern',
-          validator: Validators.pattern(
-            '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
-          ),
-          message: 'Invalid email'
+          validator: undefined,
+          message: 'Invalid email',
+          value: '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'
         }
       ]
     },
@@ -92,16 +95,19 @@ export class ConfigService {
       validations: [
         {
           name: 'required',
-          validator: Validators.required,
-          message: 'Password Required'
+          validator: undefined,
+          message: 'Password Required',
+          value: undefined,
         }, {
           name: 'minlength',
-          validator: Validators.minLength(5),
-          message: 'Name min length: 5'
+          validator: undefined,
+          message: 'Name min length: 5',
+          value: 5,
         }, {
           name: 'maxlength',
-          validator: Validators.maxLength(20),
-          message: 'Name max length: 20'
+          validator: undefined,
+          message: 'Name max length: 20',
+          value: 20
         }
       ]
     },
@@ -116,16 +122,19 @@ export class ConfigService {
       validations: [
         {
           name: 'required',
-          validator: Validators.required,
-          message: 'Age Required'
+          validator: undefined,
+          message: 'Age Required',
+          value: undefined
         }, {
           name: 'min',
-          validator: Validators.min(18),
-          message: 'Age must greater than 18'
+          validator: undefined,
+          message: 'Age must greater than 18',
+          value: 18
         }, {
           name: 'max',
-          validator: Validators.max(90),
-          message: 'Age must less than 90'
+          validator: undefined,
+          message: 'Age must less than 90',
+          value: 90
         }
       ]
     },
@@ -148,8 +157,9 @@ export class ConfigService {
       validations: [
         {
           name: 'required',
-          validator: Validators.required,
-          message: 'Date of Birth Required'
+          validator: undefined,
+          message: 'Date of Birth Required',
+          value: undefined
         }
       ]
     },
@@ -177,7 +187,7 @@ export class ConfigService {
       name: 'mime',
       catalog: {name: '高级', value: 'advanced'},
       label: 'MIME格式',
-      value: 'text/html,application/xml',
+      value: ['text/html', 'application/xml'],
       options: [{name: 'application/xml', value: 'application/xml'},
         {name: 'text/html', value: 'text/html'}, {name: 'text/xml', value: 'text/xml'}]
     },

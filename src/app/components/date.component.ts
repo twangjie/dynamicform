@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicControl} from '../DynamicControl';
+import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-date',
+  selector: 'app-dynamic-date',
   template: `
     <mat-form-field class="demo-full-width margin-top" [formGroup]="formGroup">
-      <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.label" autocomplete="off">
+      <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.label" autocomplete="off"
+             locale="zh" (click)="picker.open()">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-hint></mat-hint>

@@ -1,7 +1,6 @@
 import {Component, Injectable, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Validators} from '@angular/forms';
 import {Catalog, FieldConfig} from './field.interface';
-import {DynamicFormComponent} from './components/dynamic-form/dynamic-form.component';
+import {DynamicFormComponent} from './components/dynamic-form.component';
 import {ConfigService} from './config.service';
 import {BehaviorSubject, merge, Observable, of, Subscription} from 'rxjs';
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -11,11 +10,11 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-config-root',
+  templateUrl: './config.component.html',
+  styleUrls: ['./config.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class ConfigComponent implements OnInit, OnDestroy {
 
   processing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -107,6 +106,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       );
     } else {
+      val = this.getValue(true);
       this.configService.updateConfig(actionUrl, val, data.method).subscribe(resp => {
           console.log(resp);
           this.showSnackMessage(resp, '成功');
@@ -169,32 +169,34 @@ export class AppComponent implements OnInit, OnDestroy {
 
   getValue(checkDirty: boolean) {
 
-    const names = Object.keys(this.dynamicForm.value);
+    const formControlNames = Object.keys(this.dynamicForm.value);
     const configs = [];
 
-    names.forEach(item => {
+    formControlNames.forEach(name => {
 
-        const currentControl = this.dynamicForm.formGroup.controls[item];
+        const currentControl = this.dynamicForm.formGroup.controls[name];
 
         if (checkDirty && !currentControl.dirty && currentControl.pristine) {
           return;
         }
 
-        const value = this.dynamicForm.value[item];
+        const value = this.dynamicForm.value[name];
         if (value === undefined) {
           return;
         }
 
+        const key = this.findConfigKeyByName(name);
         if (this.returnType === 'ASSEMBLED_KV_OBJ') {
           const obj = {};
-          obj[item] = this.dynamicForm.value[item];
+          obj[key] = this.dynamicForm.value[name];
           configs.push(obj);
         } else {
-          configs.push({key: item, value: this.dynamicForm.value[item]});
+          configs.push({key: key, value: this.dynamicForm.value[name]});
         }
       }
     );
 
+    // 根据name找key
     if (this.returnType !== 'ASSEMBLED_KV_OBJ') {
       const allConfigs = this.configs;
       configs.forEach(config => {
@@ -204,8 +206,12 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     }
 
-    // return JSON.stringify(configs);
     return configs;
+  }
+
+  findConfigKeyByName(name) {
+    const ret = this.configs.filter(ori => ori.name === name);
+    return ret[0].key;
   }
 
   getValueAsync(checkDirty: boolean): Observable<any> {
@@ -250,13 +256,31 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         // 构造 Validation
-        if (item.validations !== undefined) {
-          item.validations.forEach(validator => {
-            if (validator.name === 'required') {
-              validator.validator = Validators.required;
-            }
-          });
-        }
+        // if (item.validations !== undefined) {
+        //   item.validations.forEach(validator => {
+        //
+        //     switch (validator.name) {
+        //       case 'required':
+        //         validator.validator = Validators.required;
+        //         break;
+        //       case 'pattern':
+        //         validator.validator = Validators.pattern(validator.value);
+        //         break;
+        //       case 'minlength':
+        //         validator.validator = Validators.minLength(validator.value);
+        //         break;
+        //       case 'maxlength':
+        //         validator.validator = Validators.maxLength(validator.value);
+        //         break;
+        //       case 'min':
+        //         validator.validator = Validators.min(validator.value);
+        //         break;
+        //       case 'max':
+        //         validator.validator = Validators.max(validator.value);
+        //         break;
+        //     }
+        //   });
+        // }
       });
 
       this.configs.sort((item1, item2) => item1.index < item2.index ? -1 : 1);

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicControl} from '../DynamicControl';
+import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-radiobutton',
+  selector: 'app-dynamic-radiobutton',
   // templateUrl: 'radiobutton.component.html',
   template: `
     <div class="demo-full-width margin-top" [formGroup]="formGroup">

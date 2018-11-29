@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {FieldConfig} from '../../field.interface';
+import {FieldConfig} from '../field.interface';
 
 @Component({
   exportAs: 'dynamicForm',
@@ -10,7 +10,7 @@ import {FieldConfig} from '../../field.interface';
     <!--<form class="app-dynamic-form" [formGroup]="formGroup" (submit)="onSubmit($event, 'post')">-->
 
     <form class="app-dynamic-form" [formGroup]="formGroup">
-      <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="formGroup">
+      <ng-container *ngFor="let field of fields;" appDynamicField [field]="field" [group]="formGroup">
       </ng-container>
     </form>
   `,
@@ -146,7 +146,37 @@ export class DynamicFormComponent implements OnInit {
     if (validations.length > 0) {
       const validList = [];
       validations.forEach(valid => {
-        validList.push(valid.validator);
+        let validator = valid.validator;
+        if (validator !== undefined) {
+          validList.push(validator);
+        } else {
+          switch (valid.name) {
+            case 'required':
+              validator = Validators.required;
+              break;
+            case 'pattern':
+              validator = Validators.pattern(valid.value);
+              break;
+            case 'minlength':
+              validator = Validators.minLength(valid.value);
+              break;
+            case 'maxlength':
+              validator = Validators.maxLength(valid.value);
+              break;
+            case 'min':
+              validator = Validators.min(valid.value);
+              break;
+            case 'max':
+              validator = Validators.max(valid.value);
+              break;
+            default:
+              return;
+              break;
+          }
+
+          validList.push(validator);
+        }
+
       });
       return Validators.compose(validList);
     }

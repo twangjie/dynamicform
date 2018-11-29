@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DynamicControl} from '../DynamicControl';
+import {DynamicControl} from './DynamicControl';
 
 /**
  * It looks like you're using the disabled attribute with a reactive formGroup directive. If you set disabled to true
@@ -14,7 +14,7 @@ import {DynamicControl} from '../DynamicControl';
  */
 
 @Component({
-  selector: 'app-input',
+  selector: 'app-dynamic-input',
   template: `
     <mat-form-field class="demo-full-width" [formGroup]="formGroup">
       <input matInput #input [formControlName]="field.name" [placeholder]="field.label" [type]="getInputType()"

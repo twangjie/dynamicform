@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FieldConfig} from '../../field.interface';
-import {DynamicFormComponent} from '../dynamic-form/dynamic-form.component';
-import {DynamicControl} from '../DynamicControl';
+import {FieldConfig} from '../field.interface';
+import {DynamicFormComponent} from './dynamic-form.component';
+import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-button',
+  selector: 'app-dynamic-button',
   template: `
     <div class="demo-full-width margin-top" [formGroup]="formGroup">
       <button type="submit" mat-raised-button color="primary" [name]="getName()" (click)="onSubmit($event)">{{field.label}}</button>

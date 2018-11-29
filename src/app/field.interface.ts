@@ -2,6 +2,7 @@ export interface Validator {
   name: string;
   validator: any;
   message: string;
+  value: any;
 }
 
 export interface Option {

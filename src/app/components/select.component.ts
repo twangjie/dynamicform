@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicControl} from '../DynamicControl';
+import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-select',
+  selector: 'app-dynamic-select',
   template: `
     <mat-form-field class="demo-full-width margin-top" [formGroup]="formGroup">
       <mat-select [placeholder]="field.label" [formControlName]="field.name">
