@@ -26,7 +26,7 @@ export class ConfigService {
       type: 'input',
       label: '用户名',
       inputType: 'text',
-      // name: 'msLoginName',
+      // name: '用户名',
       catalog: {name: '基本', value: 'basic'},
       value: 'admin',
       defaultValue: '',

@@ -1,9 +1,9 @@
 {
-  "name": "dynamic-form",
+  "name": "dynamicform",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
+    "start": "ng s --proxy-config proxy.config.json --host 0.0.0.0 --port 4500",
     "build": "ng b --prod --base-href=.",
     "test": "ng test",
     "lint": "ng lint",

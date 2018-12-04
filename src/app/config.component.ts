@@ -1,4 +1,4 @@
-import {Component, Injectable, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Injectable, InjectionToken, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Catalog, FieldConfig} from './field.interface';
 import {DynamicFormComponent} from './components/dynamic-form.component';
 import {ConfigService} from './config.service';
@@ -8,6 +8,10 @@ import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
 import {map} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
+
+export const WINDOW = new InjectionToken('window',
+  { providedIn: 'root', factory: () => window }
+);
 
 @Component({
   selector: 'app-config-root',
@@ -19,7 +23,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   processing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   CONFIG_URI = '/api/v1/config';
-  urlPrefix = 'http://127.0.0.1:4200';
+  urlPrefix = 'http://127.0.0.1:4500';
   url = this.urlPrefix + this.CONFIG_URI;
 
   treeControl: FlatTreeControl<CatalogTreeFlatNode>;
@@ -57,6 +61,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    @Inject(WINDOW) private window: Window,
     private snackBar: MatSnackBar,
     private configService: ConfigService) {
     // this.fieldConfigBehavior.next(configService.configFields);
@@ -64,6 +69,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
     this.treeControl = new FlatTreeControl<CatalogTreeFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl);
+
+    this.urlPrefix = this.window.location.protocol + '//' + this.window.location.hostname + ':' + this.window.location.port;
+    this.url = this.urlPrefix + this.CONFIG_URI;
   }
 
   onInputUrlChang(event) {
@@ -81,47 +89,32 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
     let val = this.getValue(false);
 
-    if (val === undefined || val.length === 0) {
+    if (val === undefined) {
       this.showSnackMessage('没有需要提交的更改', '关闭', 1000);
       return;
     }
 
     const actionUrl = this.urlPrefix + data.actionUrl;
 
-    if (this.returnType === 'ASSEMBLED_KV_OBJ') {
-      val = data.value;
-      this.configService.updateConfig(actionUrl, val, data.method).subscribe(resp => {
-          console.log(resp);
-          this.showSnackMessage(resp, '成功');
-
-          this.processing.next(false);
-        },
-        // Errors will call this callback instead:
-        err => {
-          const errResp: HttpErrorResponse = err;
-          console.log(errResp.status, errResp.error);
-          this.showSnackMessage(JSON.stringify(errResp.error), errResp.status === 200 ? '成功' : '失败');
-
-          this.processing.next(false);
-        }
-      );
-    } else {
+    if (this.returnType === 'OBJECT_LIST') {
       val = this.getValue(true);
-      this.configService.updateConfig(actionUrl, val, data.method).subscribe(resp => {
-          console.log(resp);
-          this.showSnackMessage(resp, '成功');
-
-          this.processing.next(false);
-        },
-        // Errors will call this callback instead:
-        err => {
-          const errResp: HttpErrorResponse = err;
-          console.log(errResp.status, errResp.error);
-          this.showSnackMessage(JSON.stringify(errResp.error), errResp.status === 200 ? '成功' : '失败');
-
-          this.processing.next(false);
-        });
     }
+
+    this.configService.updateConfig(actionUrl, val, data.method).subscribe(resp => {
+        console.log(resp);
+        this.showSnackMessage(resp, '成功');
+
+        this.processing.next(false);
+      },
+      // Errors will call this callback instead:
+      err => {
+        const errResp: HttpErrorResponse = err;
+        console.log(errResp.status, errResp.error);
+        this.showSnackMessage(JSON.stringify(errResp.error), errResp.status === 200 ? '成功' : '失败');
+
+        this.processing.next(false);
+      }
+    );
 
     console.log(val);
     // alert(val);
@@ -161,7 +154,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
       );
     }
 
-    fields.push({type: 'button', label: '保存', value: 'save', catalog: fields[0].catalog});
+    if (catalogName !== this.defaultCatalogs[0].name) {
+      fields.push({type: 'button', label: '保存', value: 'save', catalog: fields[0].catalog});
+    }
 
     this.dynamicForm.setConfig(fields);
     this.fieldConfigBehavior.next(fields);
@@ -171,6 +166,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
     const formControlNames = Object.keys(this.dynamicForm.value);
     const configs = [];
+    const configObj = {};
 
     formControlNames.forEach(name => {
 
@@ -187,11 +183,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
         const key = this.findConfigKeyByName(name);
         if (this.returnType === 'ASSEMBLED_KV_OBJ') {
-          const obj = {};
-          obj[key] = this.dynamicForm.value[name];
-          configs.push(obj);
+          // const obj = {};
+          configObj[key] = value;
+          // configs.push(obj);
         } else {
-          configs.push({key: key, value: this.dynamicForm.value[name]});
+          configs.push({key: key, value: value});
         }
       }
     );
@@ -204,9 +200,10 @@ export class ConfigComponent implements OnInit, OnDestroy {
           config.key = filtered.key
         );
       });
+      return configs;
+    } else {
+      return configObj;
     }
-
-    return configs;
   }
 
   findConfigKeyByName(name) {
@@ -220,11 +217,15 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   getConfig() {
 
+    this.processing.next(true);
+
     this.resetSelectedCatalog();
 
     this.returnType = 'ASSEMBLED_KV_OBJ';
 
     this.configService.getConfigFields(this.url).subscribe(items => {
+
+      this.processing.next(false);
 
       this.configs = items;
 
@@ -254,33 +255,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
         if (item.value === undefined || item.value === null || item.value.length === 0) {
           item.value = item.defaultValue;
         }
-
-        // 构造 Validation
-        // if (item.validations !== undefined) {
-        //   item.validations.forEach(validator => {
-        //
-        //     switch (validator.name) {
-        //       case 'required':
-        //         validator.validator = Validators.required;
-        //         break;
-        //       case 'pattern':
-        //         validator.validator = Validators.pattern(validator.value);
-        //         break;
-        //       case 'minlength':
-        //         validator.validator = Validators.minLength(validator.value);
-        //         break;
-        //       case 'maxlength':
-        //         validator.validator = Validators.maxLength(validator.value);
-        //         break;
-        //       case 'min':
-        //         validator.validator = Validators.min(validator.value);
-        //         break;
-        //       case 'max':
-        //         validator.validator = Validators.max(validator.value);
-        //         break;
-        //     }
-        //   });
-        // }
       });
 
       this.configs.sort((item1, item2) => item1.index < item2.index ? -1 : 1);
@@ -305,6 +279,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
       this.onCatalogSelected(this.defaultCatalogs[0].name);
     }, err => {
+
+      this.processing.next(false);
       this.showSnackMessage(err.message, '失败', 5000);
     });
 
