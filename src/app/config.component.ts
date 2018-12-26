@@ -38,7 +38,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   fieldConfigBehavior = new BehaviorSubject<FieldConfig[]>([]);
   catalogClickedEvtSub: Subscription;
 
-  configs = [];
+  configs: FieldConfig[] = [];
 
   /**
    *  __RETURN_TYPE__，用于指定前段修改值后的返回方式：
@@ -257,7 +257,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.configs.sort((item1, item2) => item1.index < item2.index ? -1 : 1);
+      this.configs.sort((item1, item2) => {
+        if (item1.catalog === undefined || item2.catalog === undefined || item1.catalog.name.localeCompare(item2.catalog.name) === 0) {
+          return item1.index < item2.index ? -1 : 1;
+        }
+        return item1.catalog.name.localeCompare(item2.catalog.name) ? -1 : 1;
+      });
 
       // this.configs.push({type: 'button', label: '保存', catalog: this.defaultCatalogs[0]});
 

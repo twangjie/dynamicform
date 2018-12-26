@@ -8,7 +8,6 @@
       "^/api": "http://127.0.0.1:5300/api"
     }
   },
-
   "/31/api/*": {
     "target": "http://192.168.50.31:9700",
     "secure": false,
@@ -18,7 +17,6 @@
       "^/31/api": "http://192.168.50.31:9700/api"
     }
   },
-
   "/116/api/*": {
     "target": "http://192.168.50.116:10200",
     "secure": false,
@@ -26,6 +24,15 @@
     "logLevel": "debug",
     "pathRewrite": {
       "^/116/api": "http://192.168.50.116:10200/api"
+    }
+  },
+  "/212/api/*": {
+    "target": "http://192.168.50.212:9800",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/212/api": "http://192.168.50.212:9800/api"
     }
   }
 }
