@@ -33,7 +33,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   selectedCatalog: Catalog = this.defaultCatalogs[0];
 
-  @ViewChild(DynamicFormComponent) dynamicForm: DynamicFormComponent;
+  @ViewChild('dyForm') dynamicForm: DynamicFormComponent;
 
   fieldConfigBehavior = new BehaviorSubject<FieldConfig[]>([]);
   catalogClickedEvtSub: Subscription;
@@ -48,7 +48,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   returnType = 'ASSEMBLED_KV_OBJ';
   saveValueAsString = false;
 
-  @ViewChild('dyForm') dyForm;
+  // @ViewChild('dyForm') dyForm;
 
   getLevel = (node: CatalogTreeFlatNode) => node.level;
 
@@ -144,9 +144,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
       this.selectedCatalog = first.catalog;
       if (this.returnType === 'ASSEMBLED_KV_OBJ') {
-        this.dyForm.actionUrl = this.CONFIG_URI + '/' + this.selectedCatalog.value;
+        this.dynamicForm.actionUrl = this.CONFIG_URI + '/' + this.selectedCatalog.value;
       } else {
-        this.dyForm.actionUrl = this.CONFIG_URI;
+        this.dynamicForm.actionUrl = this.CONFIG_URI;
       }
 
       fields = this.configs.filter(item =>
@@ -274,7 +274,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
       const arr = this.configs.filter(item => item.catalog !== undefined)
         .map(item => item.catalog).reduce((x, y) => x.findIndex(e => e.name === y.name) < 0 ? [...x, y] : x, []);
 
-      this.dyForm.actionUrl = this.CONFIG_URI;
+      this.dynamicForm.actionUrl = this.CONFIG_URI;
 
       this.catalogs = [...this.defaultCatalogs];
       this.catalogs.push(...arr);
