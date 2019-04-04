@@ -10,6 +10,7 @@ import {CheckboxComponent} from './checkbox.component';
 import {SelectionListComponent} from './selection-list.component';
 import {DynamicControl} from './DynamicControl';
 import {TextAreaComponent} from "./textarea.component";
+import {MapComponent} from "./map.component";
 
 const componentMapper = {
   input: InputComponent,
@@ -19,7 +20,8 @@ const componentMapper = {
   date: DateComponent,
   radioGroup: RadioGroupComponent,
   checkbox: CheckboxComponent,
-  textarea: TextAreaComponent
+  textarea: TextAreaComponent,
+  map: MapComponent
 };
 
 @Directive({

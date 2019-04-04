@@ -213,6 +213,15 @@ export class ConfigService {
       catalog: {name: '其他', value: 'others'},
       value: '11111111111111111',
       defaultValue: ''
+    },
+    {
+      key: 'testmap',
+      type: 'map',
+      label: '测试map',
+      name: 'testmap',
+      catalog: {name: '其他', value: 'others'},
+      value: '[{"key":"192.168.50.150","value":"150.cd-azsy.com:9660"},{"key":"192.168.50.221","value":"151.cd-azsy.com:9600"}]',
+      defaultValue: ''
     }
   ];
   announceCatalogClicked = (item) => this.catalogClickedSource.next(item);

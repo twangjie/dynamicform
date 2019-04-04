@@ -22,6 +22,7 @@ import {PrettyJsonModule} from 'angular2-prettyjson';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {TextAreaComponent} from "./components/textarea.component";
+import {MapComponent} from "./components/map.component";
 
 export const MY_FORMATS: MatDateFormats = {
   parse: {
@@ -59,7 +60,8 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     CheckboxComponent,
     DynamicFieldDirective,
     DynamicFormComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +94,8 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     DateComponent,
     RadioGroupComponent,
     CheckboxComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    MapComponent
   ]
 })
 export class AppModule {
