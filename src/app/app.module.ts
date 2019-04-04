@@ -9,7 +9,7 @@ import {InputComponent} from './components/input.component';
 import {ButtonComponent} from './components/button.component';
 import {SelectComponent} from './components/select.component';
 import {DateComponent} from './components/date.component';
-import {RadiobuttonComponent} from './components/radiobutton.component';
+import {RadioGroupComponent} from './components/radio-group.component';
 import {CheckboxComponent} from './components/checkbox.component';
 import {DynamicFieldDirective} from './components/dynamic-field.directive';
 import {DynamicFormComponent} from './components/dynamic-form.component';
@@ -54,7 +54,7 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     SelectComponent,
     SelectionListComponent,
     DateComponent,
-    RadiobuttonComponent,
+    RadioGroupComponent,
     CheckboxComponent,
     DynamicFieldDirective,
     DynamicFormComponent,
@@ -88,7 +88,7 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     SelectComponent,
     SelectionListComponent,
     DateComponent,
-    RadiobuttonComponent,
+    RadioGroupComponent,
     CheckboxComponent
   ]
 })

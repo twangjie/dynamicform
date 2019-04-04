@@ -154,9 +154,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
       );
     }
 
-    if (catalogName !== this.defaultCatalogs[0].name) {
-      fields.push({type: 'button', label: '保存', value: 'save', catalog: fields[0].catalog});
-    }
+    // if (catalogName !== this.defaultCatalogs[0].name) {
+    //   fields.push({type: 'button', label: '保存', value: 'save', catalog: fields[0].catalog});
+    // }
 
     this.dynamicForm.setConfig(fields);
     this.fieldConfigBehavior.next(fields);
@@ -301,6 +301,25 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, action, {
       duration: duration,
     });
+  }
+
+  getConfigByCatalog(catalog: Catalog) {
+    let fields = this.configs
+      .filter(item => catalog !== undefined)
+      .filter(item => catalog.value === item.catalog.value);
+
+    // let button = new FieldConfig();
+    // button.catalog = catalog;
+    // button.endPoint = `${this.CONFIG_URI}/${catalog.value}`;
+    // button.type = 'button';
+    // button.key = 'save';
+    // button.name = 'save';
+    // button.label = '保存';
+    // button.value = 'save';
+    //
+    // fields.push(button);
+
+    return fields;
   }
 }
 

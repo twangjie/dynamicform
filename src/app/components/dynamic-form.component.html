@@ -1,0 +1,13 @@
+<form class="app-dynamic-form" [formGroup]="formGroup" [id]="catalog.value">
+    <ng-container *ngFor="let field of fields;" appDynamicField [field]="field" [group]="formGroup">
+    </ng-container>
+
+    <div class="demo-full-width margin-top" [formGroup]="formGroup">
+        <button type="submit" mat-raised-button color="primary" name="save" (click)="onSubmit($event, 'put', undefined)">
+            保存
+        </button>
+        <!--<button type="submit" mat-raised-button color="primary" name="close" (click)="onClose($event)">-->
+        <!--关闭-->
+        <!--</button>-->
+    </div>
+</form>

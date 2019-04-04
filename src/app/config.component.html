@@ -7,6 +7,23 @@
     <!--{{ showText }}-->
   </div>
 </div>
+
+<!--<mat-tab-group >-->
+
+  <!--<mat-tab *ngFor="let catalog of catalogs; let index = index" [label]="catalog.name">-->
+    <!--&lt;!&ndash;<ng-template mat-tab-label class="mat-tab-label">{{catalog.name}}</ng-template>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;-->
+   <!--Content Lazy Loading的时候必须要加上 <ng-template matTabContent>-->
+   <!--https://material.angular.io/components/tabs/overview#lazy-loading-->
+<!--&ndash;&gt;-->
+    <!--&lt;!&ndash;<ng-template matTabContent>&ndash;&gt;-->
+    <!--<app-dynamic-form #dyForm [fields]="getConfigByCatalog(catalog)" [catalog]="catalog" (submit)="submit($event)">-->
+    <!--</app-dynamic-form>-->
+    <!--&lt;!&ndash;</ng-template>&ndash;&gt;-->
+  <!--</mat-tab>-->
+<!--</mat-tab-group>-->
+
 <div class="mb-20" fxLayout="row">
   <div fxFlex="25%">
     <mat-tree #diskTree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -54,7 +71,7 @@
       <div style="text-align:center">
         <h2>{{selectedCatalog.name}}</h2>
       </div>
-      <app-dynamic-form #dyForm [fields]="fieldConfigBehavior | async" (submit)="submit($event)">
+      <app-dynamic-form #dyForm [fields]="fieldConfigBehavior | async" [catalog]="selectedCatalog" (submit)="submit($event)">
       </app-dynamic-form>
     </div>
   </div>

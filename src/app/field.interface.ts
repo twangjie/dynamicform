@@ -1,26 +1,26 @@
-export interface Validator {
+export class Validator {
   name: string;
   validator: any;
   message: string;
   value: any;
 }
 
-export interface Option {
+export class Option {
   name: string;
   value: any;
 }
 
-export interface Catalog {
+export class Catalog {
   name: string;
   value: any;
 }
 
-export interface SubCatalog {
+export class SubCatalog {
   name: string;
   value: any;
 }
 
-export interface FieldConfig {
+export class FieldConfig {
   index?: number;
   key?: string;
   label?: string;

@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {DynamicControl} from './DynamicControl';
 
 @Component({
-  selector: 'app-dynamic-radiobutton',
-  // templateUrl: 'radiobutton.component.html',
-  template: `
+    selector: 'app-dynamic-radiobutton',
+    // templateUrl: 'radiobutton.component.html',
+    template: `
     <div class="demo-full-width margin-top" [formGroup]="formGroup">
       <!--<label class="radio-label-padding">{{field.label}}</label>-->
       <mat-expansion-panel [expanded]="true">
@@ -17,14 +17,15 @@ import {DynamicControl} from './DynamicControl';
       </mat-expansion-panel>
     </div>
   `,
-  styles: []
+    styleUrls: ['dynamic-form.component.scss']
 })
-export class RadiobuttonComponent extends DynamicControl implements OnInit {
+export class RadioGroupComponent extends DynamicControl implements OnInit {
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 }
+

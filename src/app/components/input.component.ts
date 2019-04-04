@@ -14,8 +14,8 @@ import {DynamicControl} from './DynamicControl';
  */
 
 @Component({
-  selector: 'app-dynamic-input',
-  template: `
+    selector: 'app-dynamic-input',
+    template: `
     <mat-form-field class="demo-full-width" [formGroup]="formGroup">
       <input matInput #input [formControlName]="field.name" [placeholder]="field.label" [type]="getInputType()"
              [autocomplete]="getAutoComplete()">
@@ -25,39 +25,40 @@ import {DynamicControl} from './DynamicControl';
       </ng-container>
     </mat-form-field>
   `,
-  styles: []
+    styleUrls: ['dynamic-form.component.scss']
 })
 export class InputComponent extends DynamicControl implements OnInit {
 
-  hide = true;
+    hide = true;
 
-  @ViewChild('input') input: ElementRef;
+    @ViewChild('input') input: ElementRef;
 
-  constructor() {
-    super();
-  }
-
-  ngOnInit() {
-    // console.log(this.field.name + ' ngOnInit');
-  }
-
-  isPassword() {
-    return (this.field.inputType !== undefined && this.field.inputType === 'password');
-  }
-
-  getAutoComplete() {
-    if (this.field.inputType !== undefined && this.field.inputType === 'password') {
-      return 'new-password';
-    } else {
-      return 'off';
-    }
-  }
-
-  getInputType() {
-    if (this.field.inputType === 'password') {
-      return this.hide ? 'password' : 'text';
+    constructor() {
+        super();
     }
 
-    return this.field.inputType;
-  }
+    ngOnInit() {
+        // console.log(this.field.name + ' ngOnInit');
+        // console.log(this.field);
+    }
+
+    isPassword() {
+        return (this.field.inputType !== undefined && this.field.inputType === 'password');
+    }
+
+    getAutoComplete() {
+        if (this.field.inputType !== undefined && this.field.inputType === 'password') {
+            return 'new-password';
+        } else {
+            return 'off';
+        }
+    }
+
+    getInputType() {
+        if (this.field.inputType === 'password') {
+            return this.hide ? 'password' : 'text';
+        }
+
+        return this.field.inputType;
+    }
 }
