@@ -21,6 +21,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {PrettyJsonModule} from 'angular2-prettyjson';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {TextAreaComponent} from "./components/textarea.component";
 
 export const MY_FORMATS: MatDateFormats = {
   parse: {
@@ -58,6 +59,7 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     CheckboxComponent,
     DynamicFieldDirective,
     DynamicFormComponent,
+    TextAreaComponent
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,8 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     SelectionListComponent,
     DateComponent,
     RadioGroupComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    TextAreaComponent
   ]
 })
 export class AppModule {

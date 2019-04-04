@@ -3,8 +3,8 @@ import {FieldConfig} from '../field.interface';
 import {DynamicControl} from './DynamicControl';
 
 @Component({
-    selector: 'app-dynamic-selection-list',
-    template: `
+  selector: 'app-dynamic-selection-list',
+  template: `
     <div class="demo-full-width margin-top mat-form-field" [formGroup]="formGroup">
       <label class="radio-label-padding">{{field.label}}</label>
       <mat-expansion-panel>
@@ -17,66 +17,66 @@ import {DynamicControl} from './DynamicControl';
       </mat-expansion-panel>
     </div>
   `,
-    styleUrls: ['dynamic-form.component.scss']
+  styleUrls: ['dynamic-form.component.scss']
 })
 export class SelectionListComponent extends DynamicControl implements OnInit, AfterViewInit {
 
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+
+  setField(field: FieldConfig) {
+
+    super.setField(field);
+
+    if (field.value === undefined || field.value.length === 0) {
+      field.value = [];
     }
 
-    setField(field: FieldConfig) {
-
-        super.setField(field);
-
-        if (field.value === undefined || field.value.length === 0) {
-            field.value = [];
-        }
-
-        let value = field.value;
-        if (typeof value === 'string') {
-            field.value = value.split(',');
-        }
-
-        value = field.defaultValue;
-        if (typeof value === 'string') {
-            field.defaultValue = value.split(',');
-        }
-
-        if (field.options === undefined || field.options === null) {
-            field.options = [];
-        }
-
-        // this.formGroup.get(field.name).setValue(field.value);
+    let value = field.value;
+    if (typeof value === 'string') {
+      field.value = value.split(',');
     }
 
-    ngAfterViewInit(): void {
-
-        // FIX ExpressionChangedAfterItHasBeenCheckedError
-        setTimeout(() => {
-            this.formGroup.get(this.field.name).setValue(this.field.value);
-        });
+    value = field.defaultValue;
+    if (typeof value === 'string') {
+      field.defaultValue = value.split(',');
     }
 
-    ngOnInit(): void {
+    if (field.options === undefined || field.options === null) {
+      field.options = [];
     }
 
-    getSelected() {
-        const control = this.formGroup.get(this.field.name);
+    // this.formGroup.get(field.name).setValue(field.value);
+  }
 
-        const selectedVal = control.value;
+  ngAfterViewInit(): void {
 
-        if (selectedVal === undefined) {
-            return [];
-        }
+    // FIX ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.formGroup.get(this.field.name).setValue(this.field.value);
+    });
+  }
 
-        const options = this.field.options.filter(opt => selectedVal.indexOf(opt.value) !== (-1));
-        const selectedName = options.map(opt => opt.name);
+  ngOnInit(): void {
+  }
 
-        return selectedName.join(',');
+  getSelected() {
+    const control = this.formGroup.get(this.field.name);
+
+    const selectedVal = control.value;
+
+    if (selectedVal === undefined) {
+      return [];
     }
 
-    onSelection(e, v) {
-        // console.log(e.option.selected, v);
-    }
+    const options = this.field.options.filter(opt => selectedVal.indexOf(opt.value) !== (-1));
+    const selectedName = options.map(opt => opt.name);
+
+    return selectedName.join(',');
+  }
+
+  onSelection(e, v) {
+    // console.log(e.option.selected, v);
+  }
 }

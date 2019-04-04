@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DynamicControl} from './DynamicControl';
 
 /**
@@ -14,13 +14,10 @@ import {DynamicControl} from './DynamicControl';
  */
 
 @Component({
-  selector: 'app-dynamic-input',
+  selector: 'app-dynamic-textarea',
   template: `
     <mat-form-field class="demo-full-width" [formGroup]="formGroup">
-      <input matInput #input [formControlName]="field.name" [placeholder]="field.label" [type]="getInputType()"
-             [autocomplete]="getAutoComplete()">
-      <mat-icon matSuffix (click)="hide = !hide"
-                *ngIf="isPassword()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <textarea matInput #input [formControlName]="field.name" [placeholder]="field.label"></textarea>
       <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
         <mat-error *ngIf="formGroup.get(field.name).hasError(validation.name)">{{validation.message}}</mat-error>
       </ng-container>
@@ -28,11 +25,9 @@ import {DynamicControl} from './DynamicControl';
   `,
   styleUrls: ['dynamic-form.component.scss']
 })
-export class InputComponent extends DynamicControl implements OnInit {
+export class TextAreaComponent extends DynamicControl implements OnInit {
 
-  hide = true;
-
-  @ViewChild('input') input: ElementRef;
+  // @ViewChild('textarea') textarea: ElementRef;
 
   constructor() {
     super();
@@ -41,25 +36,5 @@ export class InputComponent extends DynamicControl implements OnInit {
   ngOnInit() {
     // console.log(this.field.name + ' ngOnInit');
     // console.log(this.field);
-  }
-
-  isPassword() {
-    return (this.field.inputType !== undefined && this.field.inputType === 'password');
-  }
-
-  getAutoComplete() {
-    if (this.field.inputType !== undefined && this.field.inputType === 'password') {
-      return 'new-password';
-    } else {
-      return 'off';
-    }
-  }
-
-  getInputType() {
-    if (this.field.inputType === 'password') {
-      return this.hide ? 'password' : 'text';
-    }
-
-    return this.field.inputType;
   }
 }

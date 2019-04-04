@@ -144,7 +144,10 @@ export class ConfigService {
       label: 'Gender',
       name: 'gender',
       catalog: {name: '基本', value: 'basic'},
-      options: [{name: 'Male', value: 'male'}, {name: 'Female', value: 'female'}, {name: 'Third gender', value: '3rdGender'}],
+      options: [{name: 'Male', value: 'male'}, {name: 'Female', value: 'female'}, {
+        name: 'Third gender',
+        value: '3rdGender'
+      }],
       value: 'male'
     },
     {
@@ -170,7 +173,10 @@ export class ConfigService {
       name: 'country',
       catalog: {name: '高级', value: 'advanced'},
       value: 'UK',
-      options: [{name: '印度', value: 'India'}, {name: '阿拉伯联合酋长国', value: 'UAE'}, {name: '英国', value: 'UK'}, {name: '美国', value: 'US'}]
+      options: [{name: '印度', value: 'India'}, {name: '阿拉伯联合酋长国', value: 'UAE'}, {name: '英国', value: 'UK'}, {
+        name: '美国',
+        value: 'US'
+      }]
     },
     {
       key: 'ms.user.plugins',
@@ -198,6 +204,15 @@ export class ConfigService {
       name: 'term',
       catalog: {name: '其他', value: 'others'},
       value: true
+    },
+    {
+      key: 'readme',
+      type: 'textarea',
+      label: 'readme',
+      name: 'readme',
+      catalog: {name: '其他', value: 'others'},
+      value: '11111111111111111',
+      defaultValue: ''
     }
   ];
   announceCatalogClicked = (item) => this.catalogClickedSource.next(item);

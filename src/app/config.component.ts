@@ -10,7 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
 
 export const WINDOW = new InjectionToken('window',
-  { providedIn: 'root', factory: () => window }
+  {providedIn: 'root', factory: () => window}
 );
 
 @Component({

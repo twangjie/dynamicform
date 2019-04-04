@@ -9,39 +9,41 @@ import {RadioGroupComponent} from './radio-group.component';
 import {CheckboxComponent} from './checkbox.component';
 import {SelectionListComponent} from './selection-list.component';
 import {DynamicControl} from './DynamicControl';
+import {TextAreaComponent} from "./textarea.component";
 
 const componentMapper = {
-    input: InputComponent,
-    button: ButtonComponent,
-    select: SelectComponent,
-    selectionList: SelectionListComponent,
-    date: DateComponent,
-    radioGroup: RadioGroupComponent,
-    checkbox: CheckboxComponent
+  input: InputComponent,
+  button: ButtonComponent,
+  select: SelectComponent,
+  selectionList: SelectionListComponent,
+  date: DateComponent,
+  radioGroup: RadioGroupComponent,
+  checkbox: CheckboxComponent,
+  textarea: TextAreaComponent
 };
 
 @Directive({
-    selector: '[appDynamicField]'
+  selector: '[appDynamicField]'
 })
 export class DynamicFieldDirective implements OnInit {
-    @Input() field: FieldConfig;
-    @Input() group: FormGroup;
-    componentRef: any;
+  @Input() field: FieldConfig;
+  @Input() group: FormGroup;
+  componentRef: any;
 
-    constructor(
-        private resolver: ComponentFactoryResolver,
-        private container: ViewContainerRef
-    ) {
-    }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private container: ViewContainerRef
+  ) {
+  }
 
-    ngOnInit() {
-        const factory = this.resolver.resolveComponentFactory(
-            componentMapper[this.field.type]
-        );
-        this.componentRef = this.container.createComponent(factory);
+  ngOnInit() {
+    const factory = this.resolver.resolveComponentFactory(
+      componentMapper[this.field.type]
+    );
+    this.componentRef = this.container.createComponent(factory);
 
-        const control: DynamicControl = this.componentRef.instance;
-        control.setFormGroup(this.group);
-        control.setField(this.field);
-    }
+    const control: DynamicControl = this.componentRef.instance;
+    control.setFormGroup(this.group);
+    control.setField(this.field);
+  }
 }
